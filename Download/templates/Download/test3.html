@@ -1,0 +1,40 @@
+
+{% extends "Blog/base.html" %}
+
+{% block main_panel %}{% endblock %}
+
+{% block content2 %}
+
+<div class="container text-center" >
+<h1>last Download  Page</h1>
+
+
+<!-- <a href="/media/Ved/a.mp4" download>download</a> -->
+
+<h1>click here to get your stuff : </h1>
+<a href={{ location }} download> Download </a>
+
+
+    <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Link</th>
+      <th scope="col">Size</th>
+      <th scope="col">Title</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <th scope="row"><a href={{ location }} download> Download </a></th>
+      <td> {{ SIZE }} MB </td>
+      <td>{{ Name }}</td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+
+</div>
+{% endblock %}

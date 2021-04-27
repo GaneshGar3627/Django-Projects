@@ -1,0 +1,104 @@
+
+{% extends "Blog/base.html" %}
+
+
+{% block main_panel %}{% endblock %}
+
+{% block content2 %}
+
+    <main role="main" class="container">
+
+
+        `
+
+      <div class="row ">
+        <div class="col-md-12 ">
+
+            <!--form starts here --->
+
+            <div class="container">
+
+
+                <center><h1>Downloads</h1></center>
+                <form method="POST">
+                    {% csrf_token %}
+
+                {{ form }}
+                    <button type="submit" >Next</button>
+                </form>
+
+                {{ material.res }} </br>
+                {{ material.links }} </br>
+                {{ material.embed }} </br>
+
+            </div>
+        </div>
+      </div>
+    </main>
+
+    <main role="main" class="container">
+
+
+        `
+
+      <div class="row ">
+        <div class="col-md-4 ">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} ">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        <div class="embed-responsive embed-responsive-16by9">
+     <iframe class="embed-responsive-item" src="{{ material.embed }}" allowfullscreen></iframe>
+        </div>
+        </div>
+
+
+
+        <div class="col-md-8">
+          <div class="content-section">
+              <table class="table">
+  <thead class="thead-light">
+    <tr>
+
+
+      <th scope="col">Resolution</th>
+      <th scope="col">Download</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for i in material.res %}
+    <tr>
+
+
+      <td>{{ i }}</td>
+      <td>
+          <form method="POST">
+              <button type="button" class="btn btn-primary">DOWNLOAD</button>
+          </form>
+      </td>
+
+
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+
+    </main>
+
+
+
+
+{% endblock %}

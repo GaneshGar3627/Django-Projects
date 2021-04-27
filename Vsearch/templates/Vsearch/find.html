@@ -1,0 +1,660 @@
+{% extends "Blog/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'Vsearch/album.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+{% endblock %}
+
+{% block content2 %}
+
+
+<style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+
+
+
+    .jb-tron{
+    padding-top :4px !important ;
+    padding-bottom :4px !important;
+    width : 750px ;
+
+
+    }
+
+
+
+
+</style>
+
+<!-- Custom styles for this template -->
+<!--<link href="" rel="stylesheet"> -->
+
+
+<main role="main">
+
+    <section class="jumbotron text-center jb-tron mx-auto">
+        <div class="container">
+            <h1 class="jumbotron-heading">Search YouTube</h1>
+            <p class="lead text-muted">And get the stats to find ideal source to cater your need !</p>
+            <form method="POST">
+                <div class="input-group mb-3">
+                    {% csrf_token %}
+                    <input type="text" name="search" class="form-control" aria-label="Username">
+                </div>
+                <p>
+                    <button type="submit" name="submit" value="search" class="btn btn-primary my-2">YouTube Search
+                    </button>
+                    <!--<button type="submit" name="submit" value="lucky" class="btn btn-secondary my-2">I'm Feeling Lucky</button> -->
+                </p>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- caed style -->
+
+    <style>
+    .card_btn{
+	text-align: center;
+	}
+
+
+
+
+    .channel-title-full {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+    }
+
+    .channel-title-half:hover .channel-title-full {
+      visibility: visible;
+    }
+
+    .channel-title-half{
+    margin-bottom:0;
+    color:red;
+    }
+
+
+
+
+
+
+
+
+    </style>
+
+    <!-- card style-->
+
+    <!--cards -->
+
+
+    <!--card ends here -->
+
+</main>
+
+
+<!-- navbar secondary -->
+<section>
+
+    <div class="container" id="searched_content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav mx-auto">
+                    <a class="nav-item nav-link active pl-5 pr-5" id="most-liked"  onclick="home()" href="#">Most Liked</a>
+                    <a class="nav-item nav-link active pl-5 pr-5" id="most-viewed" onclick="features()" href="#">Most Viewed</a>
+                    <a class="nav-item nav-link active pl-5 pr-5" id="m-duration" onclick="pricing()" href="#">TimeLine</a>
+                    <a class="nav-item nav-link active pl-5 pr-5" id="m-date" onclick="duration()" href="#">Duration</a>
+
+                </div>
+            </div>
+        </nav>
+
+        <div id="home">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for video in Mliked %}
+                        <div class="col-md-4 ">
+                            <div class="card mb-4 shadow-sm">
+                                <a href="{{ video.url }}">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         src="{{ video.thumbnail }}" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"
+                                         role="img" aria-label="Placeholder: Thumbnail"/>
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-text">{{ video.title }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div class="btn-group">
+                                            <p class="channel-title-half">{{video.channeltitle}} <span
+                                                    class="channel-title-full">{{video.channeltitle}}</span></p>
+                                        </div>
+
+                                        <small class="text-muted">{{ video.duration }} min</small>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.likes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-down"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.dislikes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="fas fa-eye"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.views }}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-comment"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.CommentCount}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+
+                                        <small class="text-muted">{{ video.Creation_date }} </small>
+
+
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div id="features">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for video in Mviewd %}
+                        <div class="col-md-4 ">
+                            <div class="card mb-4 shadow-sm">
+                                <a href="{{ video.url }}">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         src="{{ video.thumbnail }}" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"
+                                         role="img" aria-label="Placeholder: Thumbnail"/>
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-text">{{ video.title }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div class="btn-group">
+                                            <p class="channel-title-half">{{video.channeltitle}} <span
+                                                    class="channel-title-full">{{video.channeltitle}}</span></p>
+                                        </div>
+
+                                        <small class="text-muted">{{ video.duration }}</small>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.likes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-down"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.dislikes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="fas fa-eye"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.views }}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-comment"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.CommentCount}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="">
+                                        <small class="text-muted">{{ video.Creation_date }} </small>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div id="pricing">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for video in timeline %}
+                        <div class="col-md-4 ">
+                            <div class="card mb-4 shadow-sm">
+                                <a href="{{ video.url }}">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         src="{{ video.thumbnail }}" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"
+                                         role="img" aria-label="Placeholder: Thumbnail"/>
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-text">{{ video.title }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div class="btn-group">
+                                            <p class="channel-title-half">{{video.channeltitle}} <span
+                                                    class="channel-title-full">{{video.channeltitle}}</span></p>
+                                        </div>
+
+                                        <small class="text-muted">{{ video.duration }}</small>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.likes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-down"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.dislikes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="fas fa-eye"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.views }}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-comment"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.CommentCount}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="">
+                                        <small class="text-muted">{{ video.Creation_date }} </small>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="duration">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for video in Mduration %}
+                        <div class="col-md-4 ">
+                            <div class="card mb-4 shadow-sm">
+                                <a href="{{ video.url }}">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         src="{{ video.thumbnail }}" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"
+                                         role="img" aria-label="Placeholder: Thumbnail"/>
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-text">{{ video.title }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div class="btn-group">
+                                            <p class="channel-title-half">{{video.channeltitle}} <span
+                                                    class="channel-title-full">{{video.channeltitle}}</span></p>
+                                        </div>
+
+                                        <small class="text-muted">{{ video.duration }}</small>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.likes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-thumbs-down"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.dislikes}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="fas fa-eye"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.views }}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="row">
+
+                                                <div class="col-md-12 card_btn">
+                                                    <i class="far fa-comment"></i>
+                                                </div>
+
+                                                <div class="col-md-12 card_btn">
+                                                    <p>{{video.CommentCount}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="">
+                                        <small class="text-muted">{{ video.Creation_date }} </small>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+    <style>
+        #home{
+    display: block;
+}
+#features{
+    display: none;
+}
+#pricing{
+    display: none;
+
+}
+
+#duration{
+    display: none;
+}
+
+#most-liked{
+background-color:#fdca40;
+}
+
+
+    </style>
+    <script>
+
+
+          function home() {
+              document.getElementById("most-liked").style.backgroundColor = "#fdca40";
+              document.getElementById("most-viewed").style.backgroundColor = 'transparent';
+              document.getElementById("m-duration").style.backgroundColor = 'transparent';
+              document.getElementById("m-date").style.backgroundColor = 'transparent';
+              document.getElementById("home").style.display = "block";
+              document.getElementById("features").style.display = "none";
+              document.getElementById("pricing").style.display = "none";
+              document.getElementById("duration").style.display = "none";
+          }
+
+
+
+          function features() {
+            document.getElementById("most-viewed").style.backgroundColor = "#fdca40";
+              document.getElementById("most-liked").style.backgroundColor = 'transparent';
+              document.getElementById("m-duration").style.backgroundColor = 'transparent';
+              document.getElementById("m-date").style.backgroundColor = 'transparent';
+              document.getElementById("home").style.display = "none";
+              document.getElementById("features").style.display = "block";
+              document.getElementById("pricing").style.display = "none";
+              document.getElementById("duration").style.display = "none";
+          }
+          function pricing() {
+            document.getElementById("m-duration").style.backgroundColor = "#fdca40";
+
+              document.getElementById("most-viewed").style.backgroundColor = 'transparent';
+              document.getElementById("most-liked").style.backgroundColor = 'transparent';
+              document.getElementById("m-date").style.backgroundColor = 'transparent';
+              document.getElementById("home").style.display = "none";
+              document.getElementById("features").style.display = "none";
+              document.getElementById("pricing").style.display = "block";
+              document.getElementById("duration").style.display = "none";
+          }
+
+          function duration() {
+            document.getElementById("m-date").style.backgroundColor = "#fdca40";
+
+                          document.getElementById("most-viewed").style.backgroundColor = 'transparent';
+              document.getElementById("m-duration").style.backgroundColor = 'transparent';
+              document.getElementById("most-liked").style.backgroundColor = 'transparent';
+              document.getElementById("home").style.display = "none";
+              document.getElementById("features").style.display = "none";
+              document.getElementById("pricing").style.display = "none";
+              document.getElementById("duration").style.display = "block";
+          }
+
+
+
+
+
+
+
+    </script>
+
+
+</section>
+
+
+{% endblock %}

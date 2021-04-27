@@ -1,0 +1,90 @@
+
+{% extends "Blog/base.html" %}
+
+
+{% block main_panel %}{% endblock %}
+
+{% block content2 %}
+
+    <main role="main" class="container">
+
+
+        `
+
+      <div class="row ">
+        <div class="col-md-12 ">
+
+            <!-- EMBED S -->
+
+            {{ embed }}
+
+
+            <div class="embed-responsive embed-responsive-21by9">
+  <iframe class="embed-responsive-item" src="{{ embed }}" allowfullscreen></iframe>
+</div>
+
+            <!-- EMBED e -->
+
+            <!--form starts here --->
+
+
+
+            <!--form ends here --->
+<br></br>
+            {{ Resolutions }}
+<br></br>
+            <!-- table starts here -->
+
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+
+
+      <th scope="col">Resolution</th>
+      <th scope="col">Download</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for i in Resolutions %}
+    <tr>
+
+
+      <td>{{ i }}</td>
+      <td>
+          <form method="POST">
+              <button type="button" class="btn btn-primary">DOWNLOAD</button>
+          </form>
+      </td>
+
+
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+            <!-- table ends here -->
+
+
+
+
+
+
+
+
+          so good
+        </div>
+
+
+
+
+
+
+      </div>
+
+    </main>
+
+{% endblock %}

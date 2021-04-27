@@ -1,0 +1,151 @@
+
+{% extends "Blog/base.html" %}
+
+
+{% block main_panel %}{% endblock %}
+
+
+
+
+
+{% block content2 %}
+
+<style>
+    .jb-tron{
+    padding-top :4px !important ;
+    padding-bottom :4px !important;
+    width : 750px ;
+
+
+    }
+</style>
+
+
+<div class="container">
+
+    <!--<h1 class="text-center" >Download Page</h1>-->
+
+
+    <section class="jumbotron text-center jb-tron mx-auto" >
+    <div class="container">
+      <h1 class="jumbotron-heading">Search YouTube</h1>
+
+
+      <form action="/home/download/" method="POST">
+          {% csrf_token %}
+      <div class="input-group mb-3">
+
+        {% if video_url %}
+                <input class="form-control" type="search" name = "video_url" placeholder="Search" aria-label="Search" value={{video_url}}>
+                {% else %}
+                <input class="form-control" type="search" name = "video_url" placeholder="Search" aria-label="Search">
+          {% endif %}
+
+      </div>
+      <p>
+        <button type="submit" name="submit"  class="btn btn-outline-primary">YouTube Search</button>
+
+      </p>
+      </form>
+    </div>
+  </section>
+
+     <section class="jb-tron mx-auto" >
+
+         {% if STREAM_LIST %}
+         <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Itag</th>
+      <th scope="col">Mime_type</th>
+      <th scope="col">Resolution</th>
+      <th scope="col">FPS</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for i in STREAM_LIST %}
+    <tr>
+      <th scope="row">{{ i.itag }}</th>
+      <td> {{ i.mime_type }} </td>
+      <td>{{ i.resolution }}</td>
+      <td>{{ i.fps }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    </section>
+
+
+    <section>
+        <form action="/home/sweet/" method="POST">
+            {% csrf_token %}
+           <center> <h3><i>Please type the itag in the feild then submit to get the appropriate content.</i></h3></center>
+            </br>
+            </br>
+
+            <div class="row">
+                <div class="col-md-6 ">
+            <input class="form-control w-25 ml-auto" type="search" name = "ITAG" placeholder="Itag" aria-label="Search">
+                    <input type="hidden" name="video_url_d" value={{video_url}}>
+                </div>
+
+
+                <div class="col-md-6 ">
+                    <button type="submit" name="submit"  class="btn btn-outline-primary mr-auto">Submit</button>
+                </div>
+
+            </div>
+            </br>
+            </br>
+            <center>
+                <h2>
+                    Thank You
+                </h2>
+            </center>
+
+        </form>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="">
+          <div class=" xv bg-light text-dark text-center my-4">
+            <h3><marquee class="text-info"  direction="left" >
+            We provide u with zero malwares and high speed.
+            </marquee></h3>
+          <h2 class="">Please do visit again</h2>
+          </div></div>
+
+
+
+
+
+
+
+
+
+ {% endif %}
+
+{% endblock %}
+

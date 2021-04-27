@@ -1,0 +1,38 @@
+{% extends "Blog/base.html" %}
+{% block content %}
+
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ object.author }}</a>
+              <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+              &nbsp; &nbsp; &nbsp;
+              <a href="{{post.linkV}}" ><i class="fas fa-video"></i></a>
+              &nbsp; &nbsp;
+              <a href="{{post.ChannelV}}" ><i class="fab fa-youtube"></i></a>
+              &nbsp; &nbsp;
+              <a href="{{post.PlaylistV}}" ><i class="fas fa-list"></i></a>
+
+            </div>
+            <br>
+            <h1 class="article-title">{{ object.title }}</h1>
+            <br>
+            <img src="{{ post.image.url }}" class="image-fluid "  width="100%"/>
+            <br>
+            <br>
+            <p class="">{{ post.content }}</p>
+            <hr>
+
+
+            {% if object.author == user %}
+              <a class="btn-outline-success btn mt-1 mb-1" href="{% url 'post-update' object.id %}"> Update </a>
+            &nbsp; &nbsp;
+              <a class="btn-outline-danger btn mt-1 mb-1" href="{% url 'post-delete' object.id %}"> Delete </a>
+            {% endif %}
+
+
+          </div>
+        </article>
+
+{% endblock content %}

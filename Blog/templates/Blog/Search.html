@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+    {% else %}
+        <title>Django Blog</title>
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+                <a class="nav-item nav-link" href="{% url 'Vedio-Search' %}">Search</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+
+
+          {% block right_panel %}
+
+      </div>
+    {% endblock %}
+    </main>
+
+
+
+    <section class="jumbotron text-center">
+    <div class="container justify-content-center">
+      <h1 class="jumbotron-heading">Search YouTube</h1>
+      <p class="lead text-muted">Get the top nine results on YouTube for your query!</p>
+
+      <form method="POST">
+      <dipythv class="input-group mb-3">
+
+        {% csrf_token %}
+        <input type="text" name="search" class="form-control" aria-label="Username">
+
+      </dipythv>
+      <p>
+        <button type="submit" name="submit" value="search" class="btn btn-primary my-2">YouTube Search</button>
+        <button type="submit" name="submit"  value="lucky"  class="btn btn-secondary my-2">I'm Feeling Lucky</button>
+      </p>
+      </form>
+    </div>
+  </section>
+
+
+
+
+    <div class="container" id="searched_content">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav mx-auto">
+                    <a class="nav-item nav-link active pl-5 pr-5" onclick="home()" href="#">Home</a>
+                    <a class="nav-item nav-link active pl-5 pr-5" onclick="features()" href="#">Features</a>
+                    <a class="nav-item nav-link active pl-5 pr-5" onclick="pricing()" href="#">Pricing</a>
+                    <a class="nav-item nav-link active pl-5 pr-5" onclick="pricing()" href="#">Oldest</a>
+                </div>
+                </div>
+            </nav>
+
+            <div id="home">
+                <h1>Home</h1>
+
+                  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{i.thumbnail}}" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"></img>
+            <div class="card-body">
+              <p class="card-text">{{i.title}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" href="{{i.urls}}" class="btn btn-sm btn-outline-secondary">View</a>
+                </div>
+                <small class="text-muted">{{i.duration}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                    </div>
+          </div>
+        </div>
+
+            </div>
+            <div id="features">
+                <h1>Features</h1>
+
+                  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{i.thumbnail}}" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"></img>
+            <div class="card-body">
+              <p class="card-text">{{i.title}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" href="{{i.urls}}" class="btn btn-sm btn-outline-secondary">View</a>
+                </div>
+                <small class="text-muted">{{i.duration}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                    </div>
+          </div>
+        </div>
+
+            </div>
+            <div id="pricing">
+                <h1>Pricing</h1>
+            </div>
+        </div>
+
+
+    <style>
+        #home{
+    display: block;
+}
+#features{
+    display: none;
+}
+#pricing{
+    display: none;
+}
+    </style>
+      <script>
+
+
+          function home() {
+              document.getElementById("home").style.display = "block";
+              document.getElementById("features").style.display = "none";
+              document.getElementById("pricing").style.display = "none";
+          }
+          function features() {
+              document.getElementById("home").style.display = "none";
+              document.getElementById("features").style.display = "block";
+              document.getElementById("pricing").style.display = "none";
+          }
+          function pricing() {
+              document.getElementById("home").style.display = "none";
+              document.getElementById("features").style.display = "none";
+              document.getElementById("pricing").style.display = "block";
+          }
+      </script>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
